@@ -349,7 +349,7 @@ Use the ALLBUS data set:
 
 Suppose you are rolling a fair die 600 times: what is the number of 6s you are expecting?
 
-And how many 6s do we need to reject the NULL (a fair die)??
+And how many 6s do we need to reject the NULL (a fair die) using a two-sided test??
 
 
 ```r
@@ -358,6 +358,40 @@ qbinom(p = c(0.025,0.975),size = 600, prob = 1/6)
 
 ```
 ## [1]  82 118
+```
+
+What do we have to change for a one-sided test?
+
+
+---
+
+## Rolling the dice
+
+Suppose you are rolling a fair die 600 times: what is the number of 6s you are expecting?
+
+And how many 6s do we need to reject the NULL (a fair die) using a one-sided test??
+
+### Alternative: greater
+
+
+```r
+qbinom(p = 0.95,size = 600, prob = 1/6)
+```
+
+```
+## [1] 115
+```
+
+### Alternative: less
+
+
+
+```r
+qbinom(p = 0.05,size = 600, prob = 1/6)
+```
+
+```
+## [1] 85
 ```
 
 
@@ -486,7 +520,7 @@ sum(sample(1:6,600,replace = T)==6)
 
 Now use the following code to replicate the experiment (rolling one fair dice 600 times) 1000 times. The number of 6s are stored in the vector `x`.
 
-How many statistically significant results do you expect?
+How many statistically significant results do you expect for a one-sided alternative? How many for a two-sided alternative?
 
 How many statistically significant results did you get? (you can use `table()` in combination with a logical function)
 
