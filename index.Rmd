@@ -1,0 +1,355 @@
+---
+title       : Session4
+subtitle    : 
+author      : Mandy
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : default      # default tomorrow 
+widgets     : [mathjax,bootstrap]            # {mathjax, quiz, bootstrap}
+mode        : standalone # {standalone, draft, selfcontained}
+---
+
+<style>
+strong {
+  font-weight: bold;
+  color: red;
+  font-size: 115%
+}
+</style>
+
+
+--- .segue bg:grey
+
+# News
+
+
+--- 
+
+## News
+
+
+<iframe src="http://user2016.org/" width=100% height=100% allowtransparency="true"> </iframe>
+
+
+--- &twocol w1:40% w2:60%
+
+## News
+
+
+*** =left
+
+<iframe src="http://a2.typepad.com/6a0105360ba1c6970c01bb0885deea970d-pi" width=50% height=90% allowtransparency="true"> </iframe>
+
+*** =right
+Ross says that that observing the global labour of love has tempered his cynicism. 
+
+<q2>R changed my opinion of humanity to some extent, to see how people are really willing to **freely give** of themselves and produce something larger than themselves **without** any thought of **personal glory**. There’s a **lot of work** with **no recognition.**</q2>
+
+
+--- .segue bg:grey
+
+# Recap
+
+
+---
+
+## Recap
+
+You should know now:
+>  - that statistics is all about simplifying 
+>  - we try to summarize and describe data through parameters
+     - location parameters (which? resp R commands?)
+     - scale parameters/parameters of spread (which? resp R commands?)
+ 
+
+--- 
+
+## Recap
+
+>- *mean()*, *median()*, *quantile()*
+>- *sd()*, *range()*, *IQR()*
+
+
+---
+
+
+## Recap
+
+We have seen how
+>  - a difference of means (of two groups) 
+>  - a spread parameter (standard deviation) and
+>  - the sample sizea (as a parameter of uncertainty)
+
+>  are combined to measure the difference of the location of two groups
+>  this measure is compared to a null distribution through this comparison transformed in to a probability (p-value)
+
+
+--- 
+
+## test statistic
+
+$$t = \frac{\bar{X}_{male} - \bar{X}_{female}}{s_{overall}\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$
+
+
+--- 
+
+## Two sided alternative
+
+```{r,echo=FALSE,fig.height=8,fig.width = 12,fig.align='center'}
+curve(dt(x,df=1000),from = -4,to = 4)
+text(-4,0.35,"alternative: two sided",pos=4)
+abline(h=0)
+x <- seq(-4,qt(0.025,df=1000),by=0.01)
+y <- dnorm(x)
+x <- c(x,qt(0.025,df=1000))
+y <- c(y,dt(-4,df=1000))
+polygon(x,y,col="red")
+
+x <- seq(qt(0.975,df=1000),4,by=0.01)
+y <- dt(x,df=1000)
+x <- c(x,qt(0.975,df=1000))
+y <- c(y,dt(4,df=1000))
+polygon(x,y,col="red")
+
+text(-2.75,0.02,expression(paste("reject ",H[0])),pos=4)
+text(1.9,0.02,expression(paste("reject ",H[0])),pos=4)
+```
+
+
+---
+
+## One sided alternative - less
+
+```{r, echo=FALSE,fig.height=8,fig.width=12,fig.align='center'}
+curve(dt(x,df=1000),-4,4)
+abline(h=0)
+x <- seq(-4,qt(0.05,df=1000),by=0.01)
+y <- dt(x,df=1000)
+x <- c(x,qt(0.05,df=1000))
+y <- c(y,dt(-4,df=1000))
+polygon(x,y,col="red")
+
+text(-4,0.35,"alternative: less",pos=4)
+text(-2.45,0.02,expression(paste("reject ",H[0])),pos=4)
+
+```
+
+--- 
+
+## One sided alternative - greater
+
+```{r, echo=FALSE,fig.height=8,fig.width=12,fig.align='center'}
+curve(dt(x,df=1000),-4,4)
+abline(h=0)
+
+x <- seq(qt(0.95,df=1000),4,by=0.01)
+y <- dt(x,df=1000)
+x <- c(x,qt(0.95,df=1000))
+y <- c(y,dt(4,df=1000))
+polygon(x,y,col="red")
+
+text(-4,0.35,"alternative: greater",pos=4)
+text(1.6,0.02,expression(paste("reject ",H[0])),pos=4)
+```
+
+
+--- .nobackground .quote 
+
+<q>The p-value is the **probability** of the __sample estimate__ (of the respective estimator - here our *t*) __under the null__. We do not know anything of probabilities of the null or of estimates under the alternative!</q>
+
+
+--- &vcenter &hcenter
+
+## Decisions may be right - or wrong
+
+|           | $H_0$ is true | $H_0$ is false|
+|-----------|---------------|---------------|
+|$H_0$ is not rejected| Correct decision|Type II error|
+|$H_0$ is rejected| Type I error |  Correct decision|
+
+
+--- .segue bg:grey
+
+# T-tests in R
+
+---
+
+## T-tests in R
+
+> - the one sample t-test
+> - the two sample t-test assuming equal variances
+> - the two sample t-test without the former assumption
+> - the paired t-test (in fact: this is a one sample t-test against 0)
+> - and there are others
+> But: there is only one command in R: `t.test()`
+
+
+---
+
+## One Sample t-test
+
+```{r}
+set.seed(1)
+x <- rnorm(12) ## create random numbers
+t.test(x,mu=0) ## population mean 0
+```
+
+
+---
+
+## One Sample t-test
+
+```{r}
+t.test(x,mu=1) ## population mean 1
+```
+
+
+--- 
+
+## Two Sample t-test
+
+>  - we have given two numeric vectors
+>  - we do not assume equal variance for the underlying distributions
+
+
+```{r}
+set.seed(1)
+x <- rnorm(12) ## create random numbers
+y <- rnorm(12) ## create random numbers
+head(data.frame(x,y))
+```
+
+
+--- 
+
+## Two Sample t-test
+
+```{r}
+t.test(x,y)
+```
+
+
+---
+
+## Two Sample t-test
+
+>  - we have one numeric vector and one vector containing the group information
+>  - we do not assume equal variance for the underlying distributions
+
+
+```{r}
+g <- sample(c("A","B"),12,replace = T) ## create random group vector
+head(data.frame(x,g))
+```
+
+
+---
+
+## Two Sample t-test
+
+```{r}
+t.test(x~g)
+```
+
+
+---
+
+## Two Sample t-test
+
+  - we assume equal variance for the underlying distributions
+
+```{r}
+t.test(x,y,var.equal = T)
+```
+
+
+---
+
+## When should you use a t-test
+
+>  - comparison of mean values against a null-value or against each other
+>  - the t-test, especially the Welch test is appropriate whenever the underlying distributions are normal
+>  - it is also recommended for group sizes $\geq 30$ (robust against deviation from normality)
+
+
+---
+
+## Exercises
+
+Use the ALLBUS data set:
+- do a t-test of income (V417): male against female (V81)!
+- and compare the bmi (V279) in smokers and non-smokers (V272) and between people with high and normal blood pressure (V242)
+- how would you interpret the results?
+- visualize!
+
+
+--- .segue bg:grey
+
+# Rolling the dice
+
+---
+
+## Rolling the dice
+
+Suppose you are rolling a fair die 600 times: what is the number of 6s you are expecting?
+
+And how many 6s do we need to reject the NULL (a fair die)??
+
+```{r}
+qbinom(p = c(0.025,0.975),size = 600, prob = 1/6)
+```
+
+
+---
+
+## Rolling the dice
+
+So now let R rolling the dice!
+
+```{r}
+sample(1:6,600,replace = T)
+```
+
+
+---
+
+## Rolling the dice
+
+Count the 6s!
+
+```{r}
+sample(1:6,600,replace = T)==6
+```
+
+
+---
+
+## Rolling the dice
+
+Count the 6s!
+
+```{r}
+sum(sample(1:6,600,replace = T)==6)
+```
+
+
+---
+
+## Exercise
+
+Now use the following code to replicate the experiment (rolling one fair dice 600 times) 1000 times. The number of 6s are stored in the vector `x`.
+
+How many statistically significant results do you expect?
+
+How many statistically significant results did you get? (you can use `table()` in combination with a logical function)
+
+Visualize the result using ggplot2 and `geom_histogram()` (look at the help of `geom_histogram` )! 
+
+```{r}
+x <- replicate(1000, sum(sample(1:6,600,replace = T)==6))
+df <- data.frame(repid = 1:1000, n.6s = x)
+head(df,2)
+```
+
+
