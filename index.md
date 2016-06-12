@@ -369,7 +369,7 @@ What do we have to change for a one-sided test?
 
 Suppose you are rolling a fair die 600 times: what is the number of 6s you are expecting?
 
-And how many 6s do we need to reject the NULL (a fair die) using a one-sided test??
+And how many 6s do we need to reject the NULL (a fair die) using a one-sided test on a 95% confidence level??
 
 ### Alternative: greater
 
