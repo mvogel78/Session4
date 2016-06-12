@@ -331,6 +331,10 @@ qbinom(p = 0.05,size = 600, prob = 1/6)
 
 So now let R rolling the dice!
 
+```{r, echo=FALSE}
+set.seed(1)
+```
+
 ```{r}
 sample(1:6,600,replace = T)
 ```
@@ -342,6 +346,10 @@ sample(1:6,600,replace = T)
 
 Count the 6s!
 
+```{r, echo=FALSE}
+set.seed(1)
+```
+
 ```{r}
 sample(1:6,600,replace = T)==6
 ```
@@ -352,6 +360,10 @@ sample(1:6,600,replace = T)==6
 ## Rolling the dice
 
 Count the 6s!
+
+```{r, echo=FALSE}
+set.seed(1)
+```
 
 ```{r}
 sum(sample(1:6,600,replace = T)==6)
