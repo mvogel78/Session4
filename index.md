@@ -530,13 +530,28 @@ Visualize the result using ggplot2 and `geom_histogram()` (look at the help of `
 ```r
 x <- replicate(1000, sum(sample(1:6,600,replace = T)==6))
 df <- data.frame(repid = 1:1000, n.6s = x)
-head(df,2)
-```
-
-```
-##   repid n.6s
-## 1     1   93
-## 2     2   99
 ```
 
 
+---
+
+## Exercise
+
+
+```r
+head(df,10)
+```
+
+```
+##    repid n.6s
+## 1      1   93
+## 2      2   99
+## 3      3  122
+## 4      4  105
+## 5      5  104
+## 6      6  106
+## 7      7  107
+## 8      8  118
+## 9      9  104
+## 10    10  107
+```

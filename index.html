@@ -686,12 +686,31 @@ head(data.frame(x,g))
 
 <pre><code class="r">x &lt;- replicate(1000, sum(sample(1:6,600,replace = T)==6))
 df &lt;- data.frame(repid = 1:1000, n.6s = x)
-head(df,2)
 </code></pre>
 
-<pre><code>##   repid n.6s
-## 1     1   93
-## 2     2   99
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <hgroup>
+    <h2>Exercise</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">head(df,10)
+</code></pre>
+
+<pre><code>##    repid n.6s
+## 1      1   93
+## 2      2   99
+## 3      3  122
+## 4      4  105
+## 5      5  104
+## 6      6  106
+## 7      7  107
+## 8      8  118
+## 9      9  104
+## 10    10  107
 </code></pre>
 
   </article>
@@ -892,6 +911,12 @@ head(df,2)
       <a href="#" target="_self" rel='tooltip' 
         data-slide=32 title='Exercise'>
          32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='Exercise'>
+         33
       </a>
     </li>
   </ul>

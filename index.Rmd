@@ -373,7 +373,13 @@ Visualize the result using ggplot2 and `geom_histogram()` (look at the help of `
 ```{r}
 x <- replicate(1000, sum(sample(1:6,600,replace = T)==6))
 df <- data.frame(repid = 1:1000, n.6s = x)
-head(df,2)
 ```
 
 
+---
+
+## Exercise
+
+```{r}
+head(df,10)
+```
